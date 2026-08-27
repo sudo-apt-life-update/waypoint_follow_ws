@@ -1,0 +1,35 @@
+# Colcon build artifacts
+build/
+install/
+log/
+
+# VS Code
+.vscode/
+
+# CLion
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# ROS logs
+*.log
+
+# Calibration and run notes are worth keeping; raw bags are not
+bags/
+
+# pytest
+.pytest_cache/
+
+# Local AI/editor settings
+.claude/settings.local.json

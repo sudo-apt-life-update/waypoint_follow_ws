@@ -1,0 +1,41 @@
+# A 2 m square, walked as four straights and four 90-degree turns in place.
+#
+# This is the honest test of how far open loop gets you: the square will not
+# close. Mark the start pose with tape, walk it, and measure the gap -- that
+# gap is the drift budget the whole approach has to live inside. Two to three
+# metres of error over an 8 m square would not be surprising on a first run,
+# and most of it usually comes from the turns, not the straights.
+#
+# Turning in place rather than driving an arc is deliberate: a humanoid holds a
+# straight line far better than a curve, and a turn-then-go path has only one
+# error source per corner instead of a continuously accumulating one.
+#
+#   ros2 launch g1_walk walk.launch.py path:=square_2m.yaml
+
+name: square 2 m
+
+defaults:
+  # [MEASURED 2026-08-11] linear_speed 0.4, not 0.3.
+  # At 0.3 m/s this G1 covered ~1 m of a commanded 3 m -- the gait barely
+  # translates that slowly, it mostly stomps. At 0.4 m/s it covered 4.2 m of a
+  # commanded 4.0, i.e. within 5%. Do not lower this without re-measuring; a
+  # slower path is not a safer one here, it is a broken one.
+  linear_speed: 0.4
+  angular_speed: 0.4      # slower than the default: turns are the weak link
+  settle: 1.5             # generous -- let the gait damp out before each turn
+  ramp: 0.5
+
+segments:
+  - {move: wait, duration: 2.0, comment: let the operator get clear}
+
+  - {move: forward, distance: 2.0}
+  - {move: turn, angle: 90}
+
+  - {move: forward, distance: 2.0}
+  - {move: turn, angle: 90}
+
+  - {move: forward, distance: 2.0}
+  - {move: turn, angle: 90}
+
+  - {move: forward, distance: 2.0}
+  - {move: turn, angle: 90, settle: 2.0}

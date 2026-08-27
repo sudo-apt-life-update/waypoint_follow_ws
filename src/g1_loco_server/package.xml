@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>g1_loco_server</name>
+  <version>0.0.0</version>
+  <description>
+    Standalone ZMQ to Unitree-DDS bridge for G1 locomotion commands. Uses
+    ament_cmake as build tooling only and links no ROS libraries on purpose:
+    unitree_sdk2 and ROS 2 each bundle CycloneDDS and corrupt the heap in one
+    process.
+  </description>
+  <maintainer email="niravpanchalmerai@gmail.com">Nirav</maintainer>
+  <license>MIT License</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- unitree_sdk2 is not a rosdep key; it is installed by hand to
+       /opt/unitree_robotics. See README. -->
+  <depend>libzmq3-dev</depend>
+  <depend>cppzmq-dev</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

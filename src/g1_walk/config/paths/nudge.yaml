@@ -1,0 +1,19 @@
+# The smallest useful path: half a metre forward and stop.
+#
+# Use it the first time the whole stack runs against the real robot, when what
+# you are testing is the plumbing -- gate opens, Twists flow, the robot takes a
+# step, the watchdog stops it -- and not the path. Short enough to abort by
+# hand, short enough that drift does not matter.
+#
+#   ros2 launch g1_walk walk.launch.py path:=nudge.yaml
+
+name: nudge 0.5 m
+
+defaults:
+  linear_speed: 0.4       # below ~0.4 this robot stomps without translating
+  settle: 2.0
+  ramp: 0.5
+
+segments:
+  - {move: wait, duration: 2.0}
+  - {move: forward, distance: 0.5}

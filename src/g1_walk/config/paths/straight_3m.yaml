@@ -1,0 +1,28 @@
+# The calibration path. Run this first, every session, before anything else.
+#
+# Walk it, measure how far the robot actually travelled with a tape, then set
+#     linear_scale = 3.0 / <measured metres>
+# on path_follower. Every other path in this directory inherits that number, so
+# it is worth getting right. Expect to redo it if you change stand height,
+# swing height, speed, or the floor surface.
+#
+#   ros2 launch g1_walk walk.launch.py path:=straight_3m.yaml
+
+name: straight 3 m
+
+defaults:
+  # [MEASURED 2026-08-11] linear_speed 0.4, not 0.3.
+  # At 0.3 m/s this G1 covered ~1 m of a commanded 3 m -- the gait barely
+  # translates that slowly, it mostly stomps. At 0.4 m/s it covered 4.2 m of a
+  # commanded 4.0, i.e. within 5%. Do not lower this without re-measuring; a
+  # slower path is not a safer one here, it is a broken one.
+  linear_speed: 0.4
+  angular_speed: 0.5
+  settle: 1.0
+  ramp: 0.5
+
+segments:
+  # A couple of seconds of standing still before the first step: the settle
+  # after a segment is built in, but nothing covers the moment the gate opens.
+  - {move: wait, duration: 2.0, comment: let the operator get clear}
+  - {move: forward, distance: 3.0, settle: 2.0}
